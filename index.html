@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartik Gund | .NET Full Stack Developer | C# · ASP.NET Core · SignalR</title>
+<meta name="description" content="Kartik Gund — .NET Full Stack Developer with 4+ years building real-time monitoring systems, live streaming pipelines and enterprise applications using ASP.NET Core 8, SignalR, Angular and PostgreSQL.">
+<meta name="keywords" content=".NET Developer, ASP.NET Core, C#, SignalR, Angular, PostgreSQL, Full Stack Developer, Pune">
+<meta property="og:title" content="Kartik Gund | .NET Full Stack Developer">
+<meta property="og:description" content="Building real-time monitoring systems and enterprise applications with ASP.NET Core 8, SignalR, Angular and PostgreSQL.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#0A0E13;
+  --bg-elevated:#0D1218;
+  --card:#121924;
+  --card-hover:#161f2c;
+  --border:#1E2833;
+  --border-bright:#2A3A48;
+  --text-primary:#E9EEF3;
+  --text-secondary:#93A1AF;
+  --text-muted:#576270;
+  --cyan:#2DD4C8;
+  --cyan-dim:#1A8F86;
+  --cyan-glow:rgba(45,212,200,0.14);
+  --amber:#FF9F45;
+  --amber-glow:rgba(255,159,69,0.14);
+  --font-display:'Space Grotesk',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --radius:14px;
+  --nav-h:72px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text-primary);
+  font-family:var(--font-body);
+  line-height:1.6;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -5%, rgba(45,212,200,0.07), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 10%, rgba(255,159,69,0.05), transparent 55%);
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
+button{font-family:inherit;cursor:pointer;}
+::selection{background:var(--cyan);color:#04120F;}
+
+/* focus states */
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--cyan);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+.container{max-width:1180px;margin:0 auto;padding:0 24px;}
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:12.5px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:14px;
+}
+.eyebrow::before{
+  content:'';
+  width:7px;height:7px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 8px 1px var(--cyan);
+}
+.section{padding:112px 0;position:relative;}
+.section-head{max-width:640px;margin-bottom:56px;}
+.section-title{
+  font-family:var(--font-display);
+  font-weight:600;
+  font-size:clamp(28px,4vw,40px);
+  letter-spacing:-0.02em;
+  color:var(--text-primary);
+}
+.section-sub{color:var(--text-secondary);font-size:16px;margin-top:12px;max-width:560px;}
+.grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 0%, black 30%, transparent 75%);
+  pointer-events:none;
+}
+
+/* ============ NAV ============ */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:var(--nav-h);
+  display:flex;align-items:center;
+  border-bottom:1px solid transparent;
+  transition:background .35s ease, border-color .35s ease, backdrop-filter .35s ease;
+}
+#navbar.scrolled{
+  background:rgba(10,14,19,0.82);
+  backdrop-filter:blur(14px) saturate(140%);
+  border-bottom-color:var(--border);
+}
+.nav-inner{
+  width:100%;
+  max-width:1180px;margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  font-family:var(--font-mono);
+  font-size:17px;font-weight:600;
+  color:var(--text-primary);
+  display:flex;align-items:center;gap:8px;
+}
+.logo .dot{color:var(--cyan);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{
+  font-size:14.5px;font-weight:500;color:var(--text-secondary);
+  padding:9px 15px;border-radius:8px;
+  transition:color .2s ease, background .2s ease;
+  position:relative;
+}
+.nav-links a:hover{color:var(--text-primary);background:rgba(255,255,255,0.04);}
+.nav-links a.active{color:var(--cyan);}
+.nav-links a.active::after{
+  content:'';position:absolute;left:15px;right:15px;bottom:4px;height:2px;
+  background:var(--cyan);border-radius:2px;
+}
+.nav-cta{
+  border:1px solid var(--border-bright);
+  padding:9px 18px;border-radius:8px;
+  font-size:14px;font-weight:600;
+  color:var(--text-primary);
+  transition:border-color .2s ease, background .2s ease;
+  white-space:nowrap;
+}
+.nav-cta:hover{border-color:var(--cyan);background:var(--cyan-glow);}
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;padding:8px;
+}
+.hamburger span{width:22px;height:2px;background:var(--text-primary);transition:.3s;border-radius:2px;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-menu{
+  position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;
+  background:rgba(10,14,19,0.98);backdrop-filter:blur(10px);
+  z-index:999;
+  display:flex;flex-direction:column;
+  padding:32px 28px;gap:6px;
+  transform:translateY(-12px);opacity:0;pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease;
+}
+.mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:auto;}
+.mobile-menu a{font-size:19px;font-weight:600;padding:14px 6px;border-bottom:1px solid var(--border);color:var(--text-secondary);}
+.mobile-menu a.active{color:var(--cyan);}
+
+/* ============ HERO ============ */
+#home{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding-top:var(--nav-h);
+  position:relative;
+  overflow:hidden;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;
+  width:100%;
+}
+.hero-eyebrow{
+  font-family:var(--font-mono);font-size:13px;color:var(--amber);
+  letter-spacing:0.1em;text-transform:uppercase;margin-bottom:22px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow .pulse{
+  width:8px;height:8px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 0 0 rgba(255,159,69,0.6);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(255,159,69,0.55);}
+  70%{box-shadow:0 0 0 9px rgba(255,159,69,0);}
+  100%{box-shadow:0 0 0 0 rgba(255,159,69,0);}
+}
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(38px,5.4vw,60px);
+  line-height:1.06;
+  letter-spacing:-0.025em;
+  font-weight:700;
+  color:var(--text-primary);
+}
+.hero h1 .hi{color:var(--text-secondary);font-weight:500;font-size:0.55em;display:block;margin-bottom:6px;}
+.hero h1 .grad{
+  background:linear-gradient(100deg, var(--cyan) 5%, #7fe8de 45%, var(--amber) 95%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-role{
+  font-family:var(--font-mono);
+  font-size:17px;color:var(--text-secondary);
+  margin-top:20px;
+}
+.hero-role strong{color:var(--text-primary);font-weight:600;}
+.hero-desc{margin-top:20px;color:var(--text-secondary);font-size:16.5px;max-width:520px;}
+.hero-actions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:13px 24px;border-radius:9px;
+  font-size:14.5px;font-weight:600;
+  transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+}
+.btn-primary{
+  background:linear-gradient(100deg, var(--cyan), #23b0a6);
+  color:#04120F;
+  box-shadow:0 8px 24px -8px rgba(45,212,200,0.5);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(45,212,200,0.65);}
+.btn-secondary{
+  border:1px solid var(--border-bright);
+  color:var(--text-primary);
+  background:rgba(255,255,255,0.02);
+}
+.btn-secondary:hover{border-color:var(--cyan);background:var(--cyan-glow);transform:translateY(-2px);}
+
+.hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:40px;}
+.badge{
+  font-family:var(--font-mono);font-size:12.5px;
+  padding:7px 13px;border-radius:7px;
+  border:1px solid var(--border);
+  color:var(--text-secondary);
+  background:rgba(255,255,255,0.02);
+}
+
+.hero-meta{display:flex;gap:22px;margin-top:30px;flex-wrap:wrap;}
+.hero-meta div{font-size:13.5px;color:var(--text-muted);display:flex;align-items:center;gap:7px;}
+.hero-meta i{color:var(--cyan);font-size:13px;}
+
+/* --- console signature element --- */
+.console{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 30px 60px -25px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02) inset;
+}
+.console-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:13px 16px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg-elevated);
+}
+.console-dot{width:10px;height:10px;border-radius:50%;}
+.console-dot.r{background:#FF5F57;}
+.console-dot.y{background:#FEBC2E;}
+.console-dot.g{background:#28C840;}
+.console-title{
+  font-family:var(--font-mono);font-size:12px;color:var(--text-muted);
+  margin-left:8px;letter-spacing:0.03em;
+}
+.console-body{padding:22px 22px 24px;font-family:var(--font-mono);font-size:13.5px;}
+.console-line{color:var(--text-secondary);margin-bottom:6px;}
+.console-line .prompt{color:var(--cyan);}
+.console-line .val{color:var(--text-primary);}
+#typedLine::after{
+  content:'▍';color:var(--cyan);animation:blink 1s step-start infinite;
+}
+@keyframes blink{50%{opacity:0;}}
+
+.console-metrics{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  margin-top:18px;padding-top:18px;border-top:1px dashed var(--border);
+}
+.metric{
+  background:var(--bg-elevated);
+  border:1px solid var(--border);
+  border-radius:9px;padding:12px 14px;
+}
+.metric-label{font-size:10.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;}
+.metric-value{font-family:var(--font-display);font-size:21px;font-weight:600;color:var(--cyan);margin-top:4px;}
+.metric-value.amber{color:var(--amber);}
+.metric-sub{font-size:10.5px;color:var(--text-muted);margin-top:2px;}
+.status-row{display:flex;align-items:center;gap:8px;margin-top:16px;}
+.status-chip{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:11px;color:#7fe8b4;
+  background:rgba(40,200,120,0.09);border:1px solid rgba(40,200,120,0.25);
+  padding:5px 10px;border-radius:999px;
+}
+.status-chip .b{width:6px;height:6px;border-radius:50%;background:#28C878;box-shadow:0 0 6px #28C878;}
+
+/* ============ ABOUT ============ */
+.about-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:start;}
+.about-text p{color:var(--text-secondary);font-size:16px;margin-bottom:16px;}
+.about-text p strong{color:var(--text-primary);font-weight:600;}
+.info-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:6px;
+}
+.info-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:15px 18px;
+  border-bottom:1px solid var(--border);
+}
+.info-row:last-child{border-bottom:none;}
+.info-row .k{font-size:13px;color:var(--text-muted);font-family:var(--font-mono);}
+.info-row .v{font-size:14.5px;color:var(--text-primary);font-weight:600;text-align:right;}
+
+.expertise-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px;}
+.expertise-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:20px;transition:border-color .25s ease, transform .25s ease, background .25s ease;
+}
+.expertise-card:hover{border-color:var(--border-bright);transform:translateY(-3px);background:var(--card-hover);}
+.expertise-card i{color:var(--cyan);font-size:19px;margin-bottom:12px;display:block;}
+.expertise-card h4{font-family:var(--font-display);font-size:16px;font-weight:600;margin-bottom:6px;}
+.expertise-card p{font-size:13.5px;color:var(--text-secondary);}
+
+/* ============ SKILLS ============ */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.skill-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;
+  opacity:0;transform:translateY(18px);
+  transition:opacity .6s ease, transform .6s ease, border-color .25s ease;
+}
+.skill-card.in-view{opacity:1;transform:translateY(0);}
+.skill-card:hover{border-color:var(--border-bright);}
+.skill-card-head{display:flex;align-items:center;gap:11px;margin-bottom:16px;}
+.skill-card-head i{color:var(--cyan);font-size:18px;}
+.skill-card-head h3{font-family:var(--font-display);font-size:16px;font-weight:600;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.skill-tag{
+  font-size:12.5px;padding:6px 11px;border-radius:7px;
+  background:var(--bg-elevated);border:1px solid var(--border);
+  color:var(--text-secondary);
+  transition:color .2s ease, border-color .2s ease, background .2s ease;
+}
+.skill-tag:hover{color:var(--cyan);border-color:var(--cyan-dim);background:var(--cyan-glow);}
+
+/* ============ EXPERIENCE ============ */
+.exp-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:32px;
+  opacity:0;transform:translateY(20px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.exp-card.in-view{opacity:1;transform:translateY(0);}
+.exp-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:6px;}
+.exp-role{font-family:var(--font-display);font-size:22px;font-weight:600;}
+.exp-company{color:var(--cyan);font-weight:600;font-size:15px;margin-top:4px;}
+.exp-period{
+  font-family:var(--font-mono);font-size:12.5px;color:var(--text-muted);
+  border:1px solid var(--border);padding:6px 12px;border-radius:7px;height:fit-content;
+  white-space:nowrap;
+}
+.exp-loc{font-size:13px;color:var(--text-muted);margin-top:6px;}
+.exp-summary{color:var(--text-secondary);font-size:15px;margin-top:18px;}
+.exp-projects-note{
+  margin-top:24px;padding-top:22px;border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:13.5px;font-family:var(--font-mono);
+}
+.exp-projects-note i{color:var(--amber);}
+
+/* ============ PROJECTS ============ */
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+.project-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px;cursor:pointer;
+  transition:border-color .25s ease, transform .25s ease, background .25s ease;
+  opacity:0;transform:translateY(20px);
+  display:flex;flex-direction:column;
+}
+.project-card.in-view{opacity:1;transform:translateY(0);}
+.project-card:hover{border-color:var(--cyan-dim);transform:translateY(-4px);background:var(--card-hover);}
+.project-tag{
+  font-family:var(--font-mono);font-size:11px;color:var(--amber);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;
+}
+.project-name{font-family:var(--font-display);font-size:19px;font-weight:600;margin-bottom:10px;}
+.project-desc{font-size:14.5px;color:var(--text-secondary);flex-grow:1;margin-bottom:16px;}
+.project-tech{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
+.project-tech span{
+  font-size:11.5px;padding:5px 10px;border-radius:6px;background:var(--bg-elevated);
+  border:1px solid var(--border);color:var(--text-secondary);
+}
+.project-cta{
+  display:flex;align-items:center;gap:8px;color:var(--cyan);font-size:13.5px;font-weight:600;
+  margin-top:auto;
+}
+.project-cta i{font-size:12px;transition:transform .2s ease;}
+.project-card:hover .project-cta i{transform:translateX(4px);}
+
+/* ---- modal ---- */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(6,9,12,0.75);backdrop-filter:blur(6px);
+  z-index:2000;display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.modal-overlay.open{opacity:1;pointer-events:auto;}
+.modal{
+  background:var(--bg-elevated);border:1px solid var(--border-bright);border-radius:18px;
+  max-width:640px;width:100%;max-height:85vh;overflow-y:auto;
+  padding:36px;position:relative;
+  transform:translateY(24px) scale(0.98);transition:transform .3s ease;
+}
+.modal-overlay.open .modal{transform:translateY(0) scale(1);}
+.modal-close{
+  position:absolute;top:20px;right:20px;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-secondary);font-size:15px;
+  transition:background .2s ease, color .2s ease;
+}
+.modal-close:hover{background:var(--cyan-glow);color:var(--cyan);}
+.modal-tag{font-family:var(--font-mono);font-size:11px;color:var(--amber);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;}
+.modal h3{font-family:var(--font-display);font-size:26px;font-weight:700;margin-bottom:16px;max-width:85%;}
+.modal-section{margin-top:22px;}
+.modal-section h5{
+  font-family:var(--font-mono);font-size:11.5px;color:var(--cyan);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;
+}
+.modal-section p{color:var(--text-secondary);font-size:14.5px;}
+.modal-list li{
+  color:var(--text-secondary);font-size:14.5px;padding-left:20px;position:relative;margin-bottom:9px;
+}
+.modal-list li::before{content:'▸';position:absolute;left:0;color:var(--cyan);}
+.modal-tech{display:flex;flex-wrap:wrap;gap:8px;}
+.modal-tech span{font-size:12px;padding:6px 11px;border-radius:7px;background:var(--card);border:1px solid var(--border);color:var(--text-secondary);}
+
+/* ============ EDUCATION ============ */
+.edu-list{display:flex;flex-direction:column;gap:18px;}
+.edu-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+}
+.edu-left{display:flex;gap:18px;align-items:flex-start;}
+.edu-icon{
+  width:46px;height:46px;border-radius:11px;background:var(--cyan-glow);
+  display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:18px;flex-shrink:0;
+}
+.edu-degree{font-family:var(--font-display);font-weight:600;font-size:17px;}
+.edu-inst{color:var(--text-secondary);font-size:14px;margin-top:4px;}
+.edu-year{font-family:var(--font-mono);font-size:12.5px;color:var(--text-muted);margin-top:6px;}
+.edu-score{
+  font-family:var(--font-mono);font-size:13px;color:var(--cyan);
+  border:1px solid var(--border);padding:8px 14px;border-radius:8px;white-space:nowrap;
+}
+
+/* ============ CERTS ============ */
+.certs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.cert-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px;text-align:left;
+  transition:transform .25s ease, border-color .25s ease;
+}
+.cert-card:hover{transform:translateY(-3px);border-color:var(--border-bright);}
+.cert-card i{color:var(--amber);font-size:20px;margin-bottom:14px;display:block;}
+.cert-card h4{font-family:var(--font-display);font-size:15.5px;font-weight:600;line-height:1.35;}
+
+/* ============ CONTACT ============ */
+#contact .section-head{max-width:100%;text-align:center;margin:0 auto 44px;}
+#contact .section-title{font-size:clamp(30px,4.5vw,44px);}
+.contact-wrap{display:flex;flex-direction:column;align-items:center;}
+.contact-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:8px;}
+.contact-card{
+  display:flex;align-items:center;gap:12px;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:16px 22px;min-width:220px;
+  transition:border-color .25s ease, transform .25s ease, background .25s ease;
+}
+.contact-card:hover{border-color:var(--cyan-dim);transform:translateY(-3px);background:var(--card-hover);}
+.contact-card i{font-size:18px;color:var(--cyan);width:22px;text-align:center;}
+.contact-card .cl{font-size:11px;color:var(--text-muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.06em;}
+.contact-card .cv{font-size:14.5px;color:var(--text-primary);font-weight:600;margin-top:2px;}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--border);padding:44px 0 30px;}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.footer-brand{font-family:var(--font-mono);font-weight:600;font-size:15px;}
+.footer-brand span{color:var(--text-muted);font-weight:400;display:block;font-size:12.5px;margin-top:4px;}
+.footer-social{display:flex;gap:12px;}
+.footer-social a{
+  width:38px;height:38px;border-radius:9px;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;color:var(--text-secondary);
+  transition:color .2s ease, border-color .2s ease;
+}
+.footer-social a:hover{color:var(--cyan);border-color:var(--cyan-dim);}
+.footer-bottom{
+  margin-top:26px;padding-top:20px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  font-size:12.5px;color:var(--text-muted);
+}
+#backToTop{
+  display:flex;align-items:center;gap:6px;color:var(--text-muted);
+  border:1px solid var(--border);padding:7px 13px;border-radius:7px;
+  transition:color .2s ease, border-color .2s ease;
+}
+#backToTop:hover{color:var(--cyan);border-color:var(--cyan-dim);}
+
+/* reveal utility */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease;}
+.reveal.in-view{opacity:1;transform:translateY(0);}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:48px;}
+  .about-grid{grid-template-columns:1fr;}
+  .skills-grid{grid-template-columns:repeat(2,1fr);}
+  .projects-grid{grid-template-columns:1fr;}
+  .certs-grid{grid-template-columns:repeat(1,1fr);}
+  .expertise-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:760px){
+  .nav-links, .nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .section{padding:80px 0;}
+  .skills-grid{grid-template-columns:1fr;}
+  .hero-actions{flex-direction:column;align-items:stretch;}
+  .btn{justify-content:center;}
+  .exp-top{flex-direction:column;}
+  .edu-card{flex-direction:column;align-items:flex-start;}
+  .edu-score{align-self:flex-start;}
+}
+@media (max-width:480px){
+  .container{padding:0 18px;}
+  .console-metrics{grid-template-columns:1fr;}
+  .modal{padding:26px 20px;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo">kartik<span class="dot">.</span>dev</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#experience" class="nav-link">Experience</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#education" class="nav-link">Education</a>
+      <a href="#certifications" class="nav-link">Certifications</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Let's talk</a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" class="nav-link">Home</a>
+  <a href="#about" class="nav-link">About</a>
+  <a href="#skills" class="nav-link">Skills</a>
+  <a href="#experience" class="nav-link">Experience</a>
+  <a href="#projects" class="nav-link">Projects</a>
+  <a href="#education" class="nav-link">Education</a>
+  <a href="#certifications" class="nav-link">Certifications</a>
+  <a href="#contact" class="nav-link">Contact</a>
+</div>
+
+<!-- Hero -->
+<section id="home">
+  <div class="grid-bg"></div>
+  <div class="container hero-grid">
+    <div class="hero">
+      <div class="hero-eyebrow"><span class="pulse"></span> AVAILABLE FOR NEW OPPORTUNITIES</div>
+      <h1><span class="hi">Hi, I'm</span> Kartik Gund <span class="grad">— .NET Full Stack Developer</span></h1>
+      <div class="hero-role">Building <strong>real-time monitoring systems</strong> and <strong>scalable enterprise applications</strong> for highway infrastructure at scale.</div>
+      <p class="hero-desc">4+ years of experience designing and shipping production-grade systems with ASP.NET Core 8, SignalR and Angular — from live ANPR dashboards processing multi-lane traffic data to streaming pipelines serving camera feeds across the highway network.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-diagram-project"></i> View My Work</a>
+        <a href="assets/resume/Kartik_Gund_Resume.pdf" download="Kartik_Gund_Resume.pdf" class="btn btn-secondary"><i class="fa-solid fa-download"></i> Download Resume</a>
+      </div>
+      <div class="hero-badges">
+        <span class="badge">C#</span>
+        <span class="badge">ASP.NET Core 8</span>
+        <span class="badge">SignalR</span>
+        <span class="badge">Angular</span>
+        <span class="badge">PostgreSQL</span>
+        <span class="badge">MSSQL</span>
+      </div>
+      <div class="hero-meta">
+        <div><i class="fa-solid fa-location-dot"></i> Pune, Maharashtra</div>
+        <div><i class="fa-solid fa-envelope"></i> kartikgund2@gmail.com</div>
+        <div><i class="fa-solid fa-briefcase"></i> 4+ Years Experience</div>
+      </div>
+    </div>
+
+    <!-- Signature element: live ops console mirroring his own ANPR dashboards -->
+    <div class="console" role="img" aria-label="Simulated live system status console">
+      <div class="console-bar">
+        <span class="console-dot r"></span><span class="console-dot y"></span><span class="console-dot g"></span>
+        <span class="console-title">ops-console — central-monitoring — bash</span>
+      </div>
+      <div class="console-body">
+        <div class="console-line"><span class="prompt">$</span> whoami</div>
+        <div class="console-line"><span class="val">kartik-gund · assistant manager, software development</span></div>
+        <div class="console-line" style="margin-top:14px;"><span class="prompt">$</span> stack --active</div>
+        <div class="console-line"><span class="val">ASP.NET Core 8 · SignalR · PostgreSQL · Angular</span></div>
+        <div class="console-line" style="margin-top:14px;"><span class="prompt">$</span> <span id="typedLine"></span></div>
+
+        <div class="console-metrics">
+          <div class="metric">
+            <div class="metric-label">System Uptime</div>
+            <div class="metric-value" data-count="99.8" data-suffix="%">0%</div>
+            <div class="metric-sub">ANPR monitoring network</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">False Positives ↓</div>
+            <div class="metric-value amber" data-count="85" data-suffix="%">0%</div>
+            <div class="metric-sub">confidence-scoring engine</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Monitoring Effort ↓</div>
+            <div class="metric-value amber" data-count="80" data-suffix="%">0%</div>
+            <div class="metric-sub">via automated background services</div>
+          </div>
+        </div>
+        <div class="status-row">
+          <span class="status-chip"><span class="b"></span> LIVE · SUB-SECOND REFRESH · SIGNALR PUSH</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-head" style="margin-bottom:28px;">
+          <div class="eyebrow">About</div>
+          <h2 class="section-title">Engineering reliable systems for infrastructure that can't go down</h2>
+        </div>
+         <div class="about-text">
+          <p>I'm a <strong>.NET Full Stack Developer</strong> based in Pune with 4+ years of experience turning complex, data-heavy infrastructure problems into software that control-room teams rely on every day. I currently work as Assistant Manager – Software Development at Arya Omnitalk Wireless Solutions, where I own the design and delivery of monitoring and automation systems for highway infrastructure end-to-end.</p>
+          <p>My core strength is <strong>real-time systems</strong> — using SignalR to push live state to dashboards instead of polling, and PostgreSQL-backed aggregation layers to make sense of high-volume device telemetry across multi-lane deployments. I've built centralised monitoring platforms that track hundreds of ANPR devices, camera feeds and background services simultaneously, and streaming pipelines that convert RTSP camera feeds into browser- and iOS-friendly HLS/MSE formats.</p>
+          <p>Beyond the .NET stack, I also build with <strong>Python</strong> — training and deploying computer-vision pipelines with YOLO and PaddleOCR for edge inference on devices like the Raspberry Pi 5, and building Flask-based services for video recording and playback around MediaMTX. Whether the stack is C# or Python, my approach stays the same: understand the data flow first, then design something that stays reliable under real, continuous load.</p>
+          <p>On the full-stack side, I pair <strong>ASP.NET Core 8 and ASP.NET MVC</strong> backends with <strong>Angular and AngularJS</strong> frontends, and I'm comfortable owning a feature end-to-end — from database schema and stored-procedure tuning through to the live UI a control-room operator relies on.</p>
+        </div>
+      </div>
+      <div class="info-card reveal">
+        <div class="info-row"><span class="k">EXPERIENCE</span><span class="v">4+ Years</span></div>
+        <div class="info-row"><span class="k">ROLE</span><span class="v">.NET Full Stack Developer</span></div>
+        <div class="info-row"><span class="k">SPECIALIZATION</span><span class="v">Real-Time Systems &amp; Backend</span></div>
+        <div class="info-row"><span class="k">LOCATION</span><span class="v">Pune, Maharashtra</span></div>
+        <div class="info-row"><span class="k">PROJECTS SHIPPED</span><span class="v">5+ Enterprise Systems</span></div>
+      </div>
+    </div>
+
+    <div class="expertise-grid">
+      <div class="expertise-card reveal"><i class="fa-solid fa-bolt"></i><h4>Real-Time Systems</h4><p>SignalR-powered push architectures replacing polling — sub-second state refresh across distributed devices.</p></div>
+      <div class="expertise-card reveal"><i class="fa-solid fa-plug"></i><h4>API &amp; Integration Development</h4><p>RESTful APIs, third-party integrations like Open-Meteo, and RTSP-to-HLS/MSE streaming pipelines.</p></div>
+      <div class="expertise-card reveal"><i class="fa-solid fa-database"></i><h4>Database Engineering</h4><p>PostgreSQL and MSSQL schema design, stored-procedure tuning and query optimisation for high-frequency workloads.</p></div>
+      <div class="expertise-card reveal"><i class="fa-solid fa-diagram-project"></i><h4>Full-Stack Web Applications</h4><p>End-to-end ownership pairing ASP.NET Core/MVC backends with Angular and AngularJS frontends.</p></div>
+      <div class="expertise-card reveal"><i class="fa-solid fa-camera"></i><h4>Computer Vision &amp; Edge AI</h4><p>Training and deploying YOLO + PaddleOCR pipelines, quantised for real-time inference on edge devices like the Raspberry Pi 5.</p></div>
+      <div class="expertise-card reveal"><i class="fa-solid fa-video"></i><h4>Video &amp; Media Infrastructure</h4><p>Live streaming, recording and playback systems built around MediaMTX with Flask and PostgreSQL-backed metadata.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="section" style="background:var(--bg-elevated);">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Technical Skills</div>
+      <h2 class="section-title">The stack behind the systems</h2>
+      <p class="section-sub">Technologies used in production across highway monitoring platforms, streaming pipelines and enterprise dashboards.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-card-head"><i class="fa-solid fa-server"></i><h3>Backend</h3></div>
+        <div class="skill-tags">
+          <span class="skill-tag">C#</span><span class="skill-tag">ASP.NET Core 8</span><span class="skill-tag">ASP.NET MVC</span>
+          <span class="skill-tag">Web API</span><span class="skill-tag">.NET Framework</span><span class="skill-tag">SignalR</span>
+          <span class="skill-tag">Background Services</span><span class="skill-tag">Windows Services</span><span class="skill-tag">Windows Application</span><span class="skill-tag">RESTful APIs</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-head"><i class="fa-solid fa-display"></i><h3>Frontend</h3></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Angular</span><span class="skill-tag">AngularJS</span><span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">TypeScript</span><span class="skill-tag">Bootstrap</span><span class="skill-tag">Chart.js</span>
+          <span class="skill-tag">Leaflet.js</span><span class="skill-tag">Tailwind CSS</span><span class="skill-tag">Responsive Web Design</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-head"><i class="fa-solid fa-database"></i><h3>Database &amp; ORM</h3></div>
+        <div class="skill-tags">
+          <span class="skill-tag">PostgreSQL</span><span class="skill-tag">MSSQL</span><span class="skill-tag">ADO.NET</span>
+          <span class="skill-tag">Entity Framework</span><span class="skill-tag">LINQ</span><span class="skill-tag">Stored Procedures</span>
+          <span class="skill-tag">Query Optimisation</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-head"><i class="fa-solid fa-sitemap"></i><h3>Architecture &amp; Patterns</h3></div>
+        <div class="skill-tags">
+          <span class="skill-tag">MVC</span><span class="skill-tag">Microservices</span><span class="skill-tag">Event-Driven Architecture</span>
+          <span class="skill-tag">Dependency Injection</span><span class="skill-tag">SOLID Principles</span><span class="skill-tag">Design Patterns</span>
+          <span class="skill-tag">JWT Authentication</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-head"><i class="fa-solid fa-toolbox"></i><h3>Tools &amp; Platforms</h3></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span><span class="skill-tag">GitHub</span><span class="skill-tag">SVN</span>
+          <span class="skill-tag">Nginx</span><span class="skill-tag">IIS</span><span class="skill-tag">Postman</span>
+          <span class="skill-tag">Visual Studio</span><span class="skill-tag">VS Code</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-head"><i class="fa-solid fa-people-group"></i><h3>Process</h3></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Agile</span><span class="skill-tag">Scrum</span><span class="skill-tag">CI/CD Pipelines</span>
+          <span class="skill-tag">Real-Time Data Processing</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-card-head"><i class="fa-solid fa-eye"></i><h3>AI / CV</h3></div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span><span class="skill-tag">Flask</span><span class="skill-tag">YOLO</span>
+          <span class="skill-tag">PaddleOCR</span><span class="skill-tag">OpenCV</span><span class="skill-tag">NCNN</span>
+          <span class="skill-tag">MediaMTX</span><span class="skill-tag">Raspberry Pi 5</span><span class="skill-tag">ByteTrack</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section id="experience" class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Experience</div>
+      <h2 class="section-title">Professional Experience</h2>
+    </div>
+    <div class="exp-card reveal">
+      <div class="exp-top">
+        <div>
+          <div class="exp-role">Assistant Manager – Software Development</div>
+          <div class="exp-company">Arya Omnitalk Wireless Solutions</div>
+          <div class="exp-loc"><i class="fa-solid fa-location-dot"></i> Pune, Maharashtra</div>
+        </div>
+        <div class="exp-period">June 2022 — Present</div>
+      </div>
+      <p class="exp-summary">I own software delivery for highway monitoring infrastructure at Arya Omnitalk, working across the full stack from database to live UI. My work centres on replacing manual, ad-hoc monitoring with automated, real-time systems — centralised dashboards that watch hundreds of ANPR devices and camera feeds simultaneously, edge-deployed computer-vision models that recognise licence plates directly on-device, and streaming infrastructure that lets control-room teams view and review camera footage on demand. I move comfortably between ASP.NET Core/MVC and Python/Flask depending on what a problem needs, and have consistently shipped features that measurably cut manual effort and improve system reliability across distributed, multi-site deployments.</p>
+      <div class="exp-projects-note"><i class="fa-solid fa-circle-info"></i> 7 systems delivered in this role — explored in detail in the Projects section below.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="section" style="background:var(--bg-elevated);">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Projects</div>
+      <h2 class="section-title">Enterprise systems &amp; independent builds</h2>
+      <p class="section-sub">Click any card for the full breakdown — role, responsibilities, technologies and outcomes.</p>
+    </div>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- Project Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-tag" id="modalTag"></div>
+    <h3 id="modalTitle"></h3>
+    <div class="modal-section">
+      <h5>Overview</h5>
+      <p id="modalDesc"></p>
+    </div>
+    <div class="modal-section">
+      <h5>Key Contributions</h5>
+      <ul class="modal-list" id="modalFeatures"></ul>
+    </div>
+    <div class="modal-section">
+      <h5>Technologies</h5>
+      <div class="modal-tech" id="modalTech"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Education -->
+<section id="education" class="section">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Education</div>
+      <h2 class="section-title">Academic Background</h2>
+    </div>
+    <div class="edu-list">
+      <div class="edu-card reveal">
+        <div class="edu-left">
+          <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div>
+            <div class="edu-degree">Post Graduate Diploma in Advanced Computing (PGDAC)</div>
+            <div class="edu-inst">CDAC – IET, Pune</div>
+            <div class="edu-year">2021 — 2022</div>
+          </div>
+        </div>
+        <div class="edu-score">72.33%</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-left">
+          <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div>
+            <div class="edu-degree">Bachelor of Engineering — Mechanical Engineering</div>
+            <div class="edu-inst">JSPM NTC, Pune</div>
+            <div class="edu-year">2017 — 2020</div>
+          </div>
+        </div>
+        <div class="edu-score">CGPA 7.59 / 10</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Certifications -->
+<section id="certifications" class="section" style="background:var(--bg-elevated);">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Certifications</div>
+      <h2 class="section-title">Certifications &amp; Coursework</h2>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card reveal"><i class="fa-solid fa-certificate"></i><h4>Foundational C# with Microsoft</h4></div>
+      <div class="cert-card reveal"><i class="fa-solid fa-certificate"></i><h4>Relational Database</h4></div>
+      <div class="cert-card reveal"><i class="fa-solid fa-certificate"></i><h4>Responsive Web Design</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="section">
+  <div class="container contact-wrap">
+    <div class="section-head">
+      <div class="eyebrow" style="justify-content:center;">Contact</div>
+      <h2 class="section-title">Let's build something together</h2>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto;text-align:center;">Open to new opportunities in .NET full-stack development, real-time systems and enterprise applications.</p>
+    </div>
+    <div class="contact-actions">
+      <a href="mailto:kartikgund2@gmail.com" class="contact-card">
+        <i class="fa-solid fa-envelope"></i>
+        <div><div class="cl">Email</div><div class="cv">kartikgund2@gmail.com</div></div>
+      </a>
+      <a href="https://www.linkedin.com/in/kartik-gund" target="_blank" rel="noopener noreferrer" class="contact-card">
+        <i class="fa-brands fa-linkedin"></i>
+        <div><div class="cl">LinkedIn</div><div class="cv">/in/kartik-gund</div></div>
+      </a>
+      <a href="tel:+919561828306" class="contact-card">
+        <i class="fa-solid fa-phone"></i>
+        <div><div class="cl">Phone</div><div class="cv">+91 95618 28306</div></div>
+      </a>
+      <div class="contact-card" style="cursor:default;">
+        <i class="fa-solid fa-location-dot"></i>
+        <div><div class="cl">Location</div><div class="cv">Pune, Maharashtra</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">Kartik Gund<span>.NET Full Stack Developer — building reliable software with clean code and modern technology.</span></div>
+      <div class="footer-social">
+        <a href="mailto:kartikgund2@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/kartik-gund" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="tel:+919561828306" aria-label="Phone"><i class="fa-solid fa-phone"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kartik Gund. All rights reserved.</span>
+      <a href="#home" id="backToTop">Back to top <i class="fa-solid fa-arrow-up"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Navbar scroll state ---------- */
+  const navbar = document.getElementById('navbar');
+  function onScroll(){
+    if(window.scrollY > 20){ navbar.classList.add('scrolled'); }
+    else{ navbar.classList.remove('scrolled'); }
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- Mobile menu ---------- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function closeMenu(){
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+  }
+  hamburger.addEventListener('click', function(){
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  /* ---------- Active nav link on scroll ---------- */
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-link');
+  function setActive(){
+    let current = sections[0] ? sections[0].id : '';
+    const offset = window.scrollY + window.innerHeight * 0.35;
+    sections.forEach(sec => {
+      if(offset >= sec.offsetTop) current = sec.id;
+    });
+    navAnchors.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  document.addEventListener('scroll', setActive, {passive:true});
+  window.addEventListener('load', setActive);
+
+  /* ---------- Scroll reveal ---------- */
+  const revealEls = document.querySelectorAll('.reveal, .skill-card, .exp-card, .project-card');
+  if('IntersectionObserver' in window && !reduceMotion){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in-view'));
+  }
+
+  /* ---------- Hero console typing effect ---------- */
+  const typedEl = document.getElementById('typedLine');
+  const typedPhrases = ['monitor --status "all lanes online"', 'deploy --target production ✓'];
+  if(typedEl){
+    if(reduceMotion){
+      typedEl.textContent = typedPhrases[0];
+    } else {
+      let phraseIdx = 0, charIdx = 0, deleting = false;
+      function tick(){
+        const phrase = typedPhrases[phraseIdx];
+        if(!deleting){
+          charIdx++;
+          typedEl.textContent = phrase.slice(0, charIdx);
+          if(charIdx === phrase.length){
+            deleting = true;
+            setTimeout(tick, 1800);
+            return;
+          }
+        } else {
+          charIdx--;
+          typedEl.textContent = phrase.slice(0, charIdx);
+          if(charIdx === 0){
+            deleting = false;
+            phraseIdx = (phraseIdx + 1) % typedPhrases.length;
+          }
+        }
+        setTimeout(tick, deleting ? 30 : 55);
+      }
+      tick();
+    }
+  }
+
+  /* ---------- Metric counters ---------- */
+  const metricEls = document.querySelectorAll('.metric-value[data-count]');
+  function animateCount(el){
+    const target = parseFloat(el.getAttribute('data-count'));
+    const suffix = el.getAttribute('data-suffix') || '';
+    const isFloat = String(target).includes('.');
+    if(reduceMotion){
+      el.textContent = target + suffix;
+      return;
+    }
+    const duration = 1400;
+    const start = performance.now();
+    function frame(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = (isFloat ? val.toFixed(1) : Math.round(val)) + suffix;
+      if(p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  if('IntersectionObserver' in window){
+    const counterIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          animateCount(entry.target);
+          counterIO.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.5});
+    metricEls.forEach(el => counterIO.observe(el));
+  } else {
+    metricEls.forEach(animateCount);
+  }
+
+  /* ---------- Projects data + render ---------- */
+  const projects = [
+    {
+      tag: 'Real-Time Monitoring',
+      name: 'Central ANPR Monitoring Dashboard',
+      desc: 'A SignalR-powered centralised dashboard built with ASP.NET Core 8 and PostgreSQL to monitor all lane ANPR devices, background service health, camera feeds and data-sync operations across multi-lane highway deployments.',
+      role: '.NET Full Stack Developer',
+      features: [
+        'Implemented push-based live UI updates via SignalR, eliminating polling overhead and ensuring sub-second state refresh.',
+        'Built a PostgreSQL-backed status aggregation layer supporting live monitoring and historical downtime trend analysis.',
+        'Achieved 99.8% system uptime and an 85% reduction in false positives through confidence-scoring algorithms and structured manual review workflows across high-volume licence plate recognition operations.'
+      ],
+      tech: ['ASP.NET Core 8', 'SignalR', 'PostgreSQL', 'C#']
+    },
+    {
+      tag: 'Internal Tooling',
+      name: 'Consolidated Site Data Summary — Integration Tracking Tool',
+      desc: 'An internal monitoring platform built with .NET Core and PostgreSQL to track real-time device installation and integration progress across multiple highway sites, replacing ad-hoc communication with a centralised live dashboard.',
+      role: '.NET Developer',
+      features: [
+        'Built an automated status aggregation service consolidating installation progress across distributed sites.',
+        'Introduced root-cause tagging for delayed deployments to surface systemic issues faster.',
+        'Improved on-time delivery rates across distributed highway infrastructure projects.'
+      ],
+      tech: ['.NET Core', 'PostgreSQL', 'C#']
+    },
+    {
+      tag: 'Device Management',
+      name: 'NEXGEN — Highway Device Management Platform',
+      desc: 'An integrated device management platform consolidating cameras, VMS, ATCC, ECB and MET sensors into a unified ASP.NET MVC control-room interface with live RTSP streaming and interactive Leaflet.js mapping.',
+      role: '.NET Developer',
+      features: [
+        'Architected a unified control-room interface consolidating five distinct device categories.',
+        'Engineered device-specific background services per device type, enabling real-time data collection, isolated fault handling and independent scaling — reducing manual device monitoring effort by 80%.',
+        'Built an automated health-monitoring service generating proactive alerts across cameras, VMS, ATCC, ECB and MET sensors.'
+      ],
+      tech: ['ASP.NET MVC', 'Leaflet.js', 'RTSP Streaming', 'C#']
+    },
+    {
+      tag: 'Public-Facing Portal',
+      name: 'Smart Highway Road User Assistance & Weather Intelligence System',
+      desc: 'A real-time traveler assistance portal delivering live road alerts — accidents, closures, diversions, congestion — and route-based weather data via Open-Meteo API integration, built with ASP.NET Core and SignalR.',
+      role: '.NET Full Stack Developer',
+      features: [
+        'Engineered an RTSP-to-HLS/MSE streaming pipeline via a dedicated streaming server for seamless cross-browser and iOS camera feed access.',
+        'Implemented SignalR-based roadside device status monitoring for real-time reliability visibility.',
+        'Developed an admin-gated user alert submission workflow and a proximity-based utility locator for hospitals, petrol pumps, police stations and emergency services along the user route.'
+      ],
+      tech: ['ASP.NET Core', 'SignalR', 'Open-Meteo API', 'RTSP/HLS']
+    },
+    {
+      tag: 'Financial Systems',
+      name: 'Cash Deposit System (CDS) — Toll Plaza Cash Management',
+      desc: 'A cash reconciliation and reporting system for toll plaza operations, pairing an AngularJS frontend with an ASP.NET MVC backend for real-time transaction tracking across distributed toll infrastructure.',
+      role: '.NET Developer',
+      features: [
+        'Optimised Microsoft SQL Server stored procedures and executed query performance tuning for high-frequency cash reconciliation workflows, improving daily report generation time by ~40%.',
+        'Delivered zero-regression feature enhancements to cash flow tracking and RDLC report generation, preserving full backward compatibility and data integrity.',
+        'Built the AngularJS frontend supporting real-time transaction tracking and daily reconciliation reporting across multiple toll plaza locations.'
+      ],
+      tech: ['AngularJS', 'ASP.NET MVC', 'MSSQL', 'RDLC Reports']
+    },
+    {
+      tag: 'Edge AI · Computer Vision',
+      name: 'Edge-Based ANPR · Real-Time Processing',
+      desc: 'A lightweight, edge-deployed ANPR system running directly on a Raspberry Pi 5 against live RTSP streams, built for accurate licence-plate recognition on Indian plates without relying on cloud compute.',
+      role: 'Python Developer',
+      features: [
+        'Built a hybrid CV pipeline combining YOLO for plate detection with PaddleOCR for recognition, running at 15 FPS on-device.',
+        'Fine-tuned the detection model on 5,000+ custom images to handle local font styles and real-world lighting conditions, reaching 95% accuracy on Indian plates.',
+        'Applied NCNN quantization to shrink the model footprint by 70% for efficient edge inference on Raspberry Pi 5.',
+        'Exposed a Flask REST API with confidence-based filtering, cutting false positives by 85%.'
+      ],
+      tech: ['Python', 'YOLO', 'PaddleOCR', 'NCNN', 'Flask', 'PostgreSQL', 'OpenCV', 'Raspberry Pi 5']
+    },
+    {
+      tag: 'Video & Media Infrastructure',
+      name: 'Video Management System',
+      desc: 'A video management solution for recording, live-viewing and reviewing camera streams — built around MediaMTX for stream handling with a Flask backend and a Tailwind-styled web interface.',
+      role: 'Python Developer',
+      features: [
+        'Used MediaMTX to ingest and record live camera streams reliably for continuous archival.',
+        'Built a live-view interface for real-time monitoring of connected camera feeds.',
+        'Implemented playback and browsing of recorded footage through a Flask-powered web app.',
+        'Designed the frontend with HTML and Tailwind CSS, backed by PostgreSQL for stream and recording metadata.'
+      ],
+      tech: ['Python', 'Flask', 'MediaMTX', 'PostgreSQL', 'HTML', 'Tailwind CSS']
+    }
+  ];
+
+  const grid = document.getElementById('projectsGrid');
+  projects.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'project-card reveal';
+    card.tabIndex = 0;
+    card.setAttribute('role','button');
+    card.setAttribute('aria-label', 'View details for ' + p.name);
+    card.innerHTML =
+      '<div class="project-tag">' + p.tag + '</div>' +
+      '<div class="project-name">' + p.name + '</div>' +
+      '<p class="project-desc">' + p.desc + '</p>' +
+      '<div class="project-tech">' + p.tech.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+      '<div class="project-cta">View Details <i class="fa-solid fa-arrow-right"></i></div>';
+    card.addEventListener('click', () => openModal(i));
+    card.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openModal(i); } });
+    grid.appendChild(card);
+  });
+
+  /* re-observe newly created project cards for reveal + hover */
+  if('IntersectionObserver' in window && !reduceMotion){
+    const io2 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){ entry.target.classList.add('in-view'); io2.unobserve(entry.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('#projectsGrid .project-card').forEach(el => io2.observe(el));
+  } else {
+    document.querySelectorAll('#projectsGrid .project-card').forEach(el => el.classList.add('in-view'));
+  }
+
+  /* ---------- Modal logic ---------- */
+  const overlay = document.getElementById('modalOverlay');
+  const modalTag = document.getElementById('modalTag');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalFeatures = document.getElementById('modalFeatures');
+  const modalTech = document.getElementById('modalTech');
+  const modalClose = document.getElementById('modalClose');
+  let lastFocused = null;
+
+  function openModal(i){
+    const p = projects[i];
+    modalTag.textContent = p.tag + ' · ' + p.role;
+    modalTitle.textContent = p.name;
+    modalDesc.textContent = p.desc;
+    modalFeatures.innerHTML = p.features.map(f => '<li>' + f + '</li>').join('');
+    modalTech.innerHTML = p.tech.map(t => '<span>' + t + '</span>').join('');
+    lastFocused = document.activeElement;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    modalClose.focus();
+  }
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if(lastFocused) lastFocused.focus();
+  }
+  modalClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
+
+  /* ---------- Footer year ---------- */
+  // Copyright year is static per resume-derived content (2026 per current date context).
+})();
+</script>
+</body>
+</html>
